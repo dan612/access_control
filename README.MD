@@ -1,5 +1,5 @@
 # Access Control (Drupal 8)
-## This module provides a mechanism to block anonymous users from accessing the webiste.
+## This module provides a mechanism to block anonymous users from accessing the website.
 
 Admin page for control switch located at:
 ```
