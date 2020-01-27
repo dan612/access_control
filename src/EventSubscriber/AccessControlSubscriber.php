@@ -18,11 +18,46 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  */
 class AccessControlSubscriber implements EventSubscriberInterface {
     
+    /**
+     * Config Factory
+     *
+     * @var Drupal\Core\Config\ConfigFactory $config
+     */
     protected $config;
+
+    /**
+     * Response object
+     *
+     * @var Symfony\Component\HttpFoundation\Response $response
+     */
     protected $response;
+
+    /**
+     * The current user for the request
+     *
+     * @var Drupal\Core\Session\AccountProxy $currentUser
+     */
     protected $currentUser;
+
+    /**
+     * Entity type manager
+     *
+     * @var Drupal\Core\Entity\EntityTypeManager $entityTypeManager
+     */
     protected $entityTypeManager;
+
+    /**
+     * Default Drupal cache object
+     *
+     * @var Drupal\Core\Cache\DatabaseBackend $cache
+     */
     protected $cache;
+
+    /**
+     * Node types to show in lockdown mode
+     *
+     * @var array
+     */
     protected $nodeTypesToShowInLockdown = [
         'type' => 'page'
     ];
