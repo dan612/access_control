@@ -1,0 +1,8 @@
+services:
+    access_control.auth:
+        class: Drupal\access_control\Auth
+    access_control.subscriber:
+        class: Drupal\access_control\EventSubscriber\AccessControlSubscriber
+        arguments: ['@config.factory', '@current_user', '@entity_type.manager', '@cache.default']
+        tags:
+         - {name: event_subscriber}

@@ -1,0 +1,6 @@
+access_control.admin:
+  title: 'Killswitch'
+  description: 'Access control killswitch used to block anonymous traffic from entering the website'
+  parent: system.admin_config_system
+  route_name: access_control.settings
+  weight: 100

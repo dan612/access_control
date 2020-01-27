@@ -1,0 +1,30 @@
+<?php
+
+use Drupal\access_control\Auth;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+/**
+ * @file
+ * Contains access_control.module.
+ */
+
+// @todo - domain detection
+// @todo - pass secret key via CF workers - this gives origin lockdown
+    // meaning all requests would need to route via CF
+
+/*
+if ($_SERVER['SERVER_NAME'] == "www.example.com") {
+    accessCheck();
+} 
+
+function accessCheck() {
+    $hash = \Drupal::service('access_control.auth');
+    $requestHash = $_SERVER['x-cf-key'];
+    $cfCheck = $_SERVER['Server'];
+
+    if ($hash != $requestHash or $cfCheck != "cloudflare") {
+      //  throw new NotFoundHttpException();
+    }
+}
+*/

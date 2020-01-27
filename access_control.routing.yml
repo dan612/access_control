@@ -1,0 +1,7 @@
+access_control.settings:
+  path: 'admin/access-control/killswitch'
+  defaults:
+    _form: '\Drupal\access_control\Form\AccessControlForm'
+    _title: 'Access Control Killswitch'
+  requirements:
+    _permission: 'administer site configuration'
