@@ -27,12 +27,13 @@
      */
 
      public function buildForm(array $form, FormStateInterface $form_state) {
-        
+
         $config = $this->config(static::AC_SETTINGS);
 
         $form['lockdown'] = [
             '#type' => 'checkbox',
-            '#title' => 'Lock Down Website',
+            '#title' => 'Enable lockdown',
+            '#description' => 'Check this box to prevent anonymous viewers',
             '#default_value' => $config->get('lockdown'),
         ];
         return parent::buildForm($form, $form_state);
@@ -56,6 +57,7 @@
        ->set('lockdown', $form_state->getValue('lockdown'))
        ->save();
        parent::submitForm($form, $form_state);
+
        // @todo - this should probably just invalidate the ac:response cache tag
        drupal_flush_all_caches();
    }
