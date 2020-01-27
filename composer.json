@@ -16,7 +16,7 @@
     },
     "extra": {
       "installer-paths": {
-        "docroot/profiles/custom/{$name}": ["type:drupal-custom"]
+        "web/modules/custom/{$name}": ["type:drupal-custom"]
       }
     }
 }
