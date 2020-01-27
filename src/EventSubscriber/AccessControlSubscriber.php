@@ -130,10 +130,10 @@ class AccessControlSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * See if the site should be available from settings.
+   * See if the site should be offline from settings.
    *
    * @return bool
-   *   True/false should the site be available.
+   *   True/false should the site be offline.
    */
   public function shouldBeOffline() {
     $setting = $this->config->get('access_control.settings');
