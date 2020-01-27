@@ -10,7 +10,6 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class AccessControlForm extends ConfigFormBase {
 
-
   const AC_SETTINGS = 'access_control.settings';
 
   /**
