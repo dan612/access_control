@@ -97,17 +97,15 @@ class AccessControlSubscriber implements EventSubscriberInterface {
    *   The current event.
    */
   public function checkAvailability(FilterResponseEvent $event) {
-    if ($this->currentUser->isAnonymous()) {
-      if (self::shouldBeOffline()) {
-        $output = '<h1>Website is Currently Offline</h1><h2>Look at all the fun content that awaits!</h2>';
-        $output .= self::generateHtmlListOfLockdownNodes();
-        // @todo - do you have to check if the item exists before setting, or will render cache do that prior to this point?
-        $this->cache->set('access_control_page', $this->response, $this->cache::CACHE_PERMANENT, ['ac:response']);
-        // Set the content, stop all other events, respond.
-        $this->response->setContent($output);
-        $event->stopPropagation();
-        $event->setResponse($this->response);
-      }
+    if ($this->currentUser->isAnonymous() && self::shouldBeOffline()) {
+      $output = '<h1>Website is Currently Offline</h1><h2>Look at all the fun content that awaits!</h2>';
+      $output .= self::generateHtmlListOfLockdownNodes();
+      // @todo - do you have to check if the item exists before setting, or will render cache do that prior to this point?
+      $this->cache->set('access_control_page', $this->response, $this->cache::CACHE_PERMANENT, ['ac:response']);
+      // Set the content, stop all other events, respond.
+      $this->response->setContent($output);
+      $event->stopPropagation();
+      $event->setResponse($this->response);
     }
   }
 
