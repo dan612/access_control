@@ -56,6 +56,7 @@
        ->set('lockdown', $form_state->getValue('lockdown'))
        ->save();
        parent::submitForm($form, $form_state);
+       // @todo - this should probably just invalidate the ac:response cache tag
        drupal_flush_all_caches();
    }
 
