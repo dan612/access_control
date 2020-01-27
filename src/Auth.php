@@ -10,7 +10,7 @@ class Auth {
         // @todo Get the shared key from config and set in CF worker
         
         /*
-        * @example Cloudflare Worker:
+        * @example Cloudflare Worker (Javascript)
         *
         addEventListener('fetch', event => {
             event.respondWith(addHeader(event.request))
