@@ -6,18 +6,16 @@ use Drupal\Core\Cache\DatabaseBackend;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Session\AccountProxy;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 /**
  * AccessControlSubscriber class
  */
 class AccessControlSubscriber implements EventSubscriberInterface {
-    
+
     /**
      * Config Factory
      *
@@ -62,6 +60,14 @@ class AccessControlSubscriber implements EventSubscriberInterface {
         'type' => 'page'
     ];
 
+    /**
+     * Constructor for AccessControlSubscriber
+     *
+     * @param ConfigFactory $config
+     * @param AccountProxy $currentUser
+     * @param EntityTypeManager $entityTypeManager
+     * @param DatabaseBackend $cache
+     */
     public function __construct(ConfigFactory $config, AccountProxy $currentUser, EntityTypeManager $entityTypeManager, DatabaseBackend $cache) {
         $this->config = $config;
         // @todo Find the right way to inject this
@@ -73,7 +79,6 @@ class AccessControlSubscriber implements EventSubscriberInterface {
 
     /**
      * {@inheritdoc}
-     * 
      * The event names to listen for, and the methods that should be executed.
      *
      * @return array
@@ -87,9 +92,9 @@ class AccessControlSubscriber implements EventSubscriberInterface {
     /**
      * Check if site should be available - for anonymous only
      *
-     * @param Symfony\Component\EventDispatcher\Event $event
+     * @param Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
      */
-    public function checkAvailability(Event $event) {
+    public function checkAvailability(FilterResponseEvent $event) {
         if ($this->currentUser->isAnonymous()) {
             if (self::shouldBeOffline()) {
                 $output = '<h1>Website is Currently Offline</h1><h2>Look at all the fun content that awaits!</h2>';
@@ -107,8 +112,6 @@ class AccessControlSubscriber implements EventSubscriberInterface {
     /**
      * Generates a list of titles of a given node type
      * as defined in $nodeTypesToShowInLockdown
-     * 
-     * Default is page
      * @return string
      */
     public function generateHtmlListOfLockdownNodes() {
@@ -133,7 +136,7 @@ class AccessControlSubscriber implements EventSubscriberInterface {
         $enabled_check = $setting->get('lockdown');
         if ($enabled_check === 1) {
             return TRUE;
-        } 
+        }
         return FALSE;
     }
 }
