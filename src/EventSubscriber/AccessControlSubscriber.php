@@ -9,7 +9,6 @@ use Drupal\Core\Session\AccountProxy;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * AccessControlSubscriber class.
@@ -22,13 +21,6 @@ class AccessControlSubscriber implements EventSubscriberInterface {
    * @var Drupal\Core\Config\ConfigFactory
    */
   protected $config;
-
-  /**
-   * Response object.
-   *
-   * @var Symfony\Component\HttpFoundation\Response
-   */
-  protected $response;
 
   /**
    * The current user for the request.
@@ -74,8 +66,6 @@ class AccessControlSubscriber implements EventSubscriberInterface {
    */
   public function __construct(ConfigFactory $config, AccountProxy $currentUser, EntityTypeManager $entityTypeManager, DatabaseBackend $cache) {
     $this->config = $config;
-    // @todo Find the right way to inject this
-    $this->response = new Response();
     $this->currentUser = $currentUser;
     $this->entityTypeManager = $entityTypeManager;
     $this->cache = $cache;
@@ -100,12 +90,13 @@ class AccessControlSubscriber implements EventSubscriberInterface {
     if ($this->currentUser->isAnonymous() && self::shouldBeOffline()) {
       $output = '<h1>Website is Currently Offline</h1><h2>Look at all the fun content that awaits!</h2>';
       $output .= self::generateHtmlListOfLockdownNodes();
+      $response = $event->getResponse();
+      $response->setContent($output);
       // @todo - do you have to check if the item exists before setting, or will render cache do that prior to this point?
-      $this->cache->set('access_control_page', $this->response, $this->cache::CACHE_PERMANENT, ['ac:response']);
-      // Set the content, stop all other events, respond.
-      $this->response->setContent($output);
+      $event->setResponse($response);
+      $this->cache->set('access_control_page', $response, $this->cache::CACHE_PERMANENT, ['ac:response']);
+      // Stop event
       $event->stopPropagation();
-      $event->setResponse($this->response);
     }
   }
 
