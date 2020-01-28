@@ -88,10 +88,7 @@ class AccessControlSubscriber implements EventSubscriberInterface {
    */
   public function checkAvailability(FilterResponseEvent $event) {
     if ($this->currentUser->isAnonymous() && self::shouldBeOffline()) {
-      if ($cacheItem = $this->cache->get('access_control_page')) {
-        $event->stopPropagation();
-        return $cacheItem->data;
-      }
+      // @todo check for item in cache and return if true
       $output = '<h1>Website is Currently Offline</h1><h2>Look at all the fun content that awaits!</h2>';
       $output .= self::generateHtmlListOfLockdownNodes();
       $response = $event->getResponse();
