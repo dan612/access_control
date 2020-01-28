@@ -95,7 +95,7 @@ class AccessControlSubscriber implements EventSubscriberInterface {
       // @todo - do you have to check if the item exists before setting, or will render cache do that prior to this point?
       $event->setResponse($response);
       $this->cache->set('access_control_page', $response, $this->cache::CACHE_PERMANENT, ['ac:response']);
-      // Stop event
+      // Stop event.
       $event->stopPropagation();
     }
   }
