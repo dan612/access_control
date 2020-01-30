@@ -15,6 +15,9 @@ admin/access-control/killswitch
 For fun, it also shows a list of page titles on the response to anonymous users. Ex:
 ![](https://www.danchadwickdesign.com/sites/default/files/2020-01/Screen%20Shot%202020-01-27%20at%201.18.39%20PM.png)
 
+4.) A block (**id**: lockdown_status) is also provided which can be added to inform if the site is currently in lockdown mode.
+![](https://www.danchadwickdesign.com/sites/default/files/2020-01/Screen%20Shot%202020-01-30%20at%2012.43.35%20AM.png)
+
 ---
 ### TBD / Future Dev
 In development is the ability to restrict access based on the presence of a shared key and common header passed from Cloudflare. All requests lacking this header or not matching the shared key will be denied, effectively providing origin lockdown. Example CF worker script to add the header and key

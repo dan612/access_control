@@ -1,5 +1,5 @@
 name: Access Control
-description: Access Control Based on Cloudflare Worker Hash
+description: Provides a mechanism to block certain traffic pattern(s)
 package: Custom
 type: module
 core: 8.x
