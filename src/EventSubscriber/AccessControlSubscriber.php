@@ -39,7 +39,7 @@ class AccessControlSubscriber implements EventSubscriberInterface {
   /**
    * Default Drupal cache object.
    *
-   * @var Drupal\Core\Cache\CacheBackendInterface;
+   * @var Drupal\Core\Cache\CacheBackendInterface
    */
   protected $cache;
 
@@ -55,13 +55,13 @@ class AccessControlSubscriber implements EventSubscriberInterface {
   /**
    * Constructor for AccessControlSubscriber.
    *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory service.
-   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
+   * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   The current user service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity type manager service.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache
+   * @param \Drupal\Core\Cache\CacheBackendInterface $default_cache
    *   The default cache backend service.
    */
   public function __construct(ConfigFactoryInterface $config_factory, AccountProxyInterface $current_user, EntityTypeManagerInterface $entity_type_manager, CacheBackendInterface $default_cache) {
