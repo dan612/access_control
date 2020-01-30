@@ -2,10 +2,10 @@
 
 namespace Drupal\access_control\EventSubscriber;
 
-use Drupal\Core\Cache\DatabaseBackend;
-use Drupal\Core\Config\ConfigFactory;
-use Drupal\Core\Entity\EntityTypeManager;
-use Drupal\Core\Session\AccountProxy;
+use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -18,28 +18,28 @@ class AccessControlSubscriber implements EventSubscriberInterface {
   /**
    * Config Factory.
    *
-   * @var Drupal\Core\Config\ConfigFactory
+   * @var Drupal\Core\Config\ConfigFactoryInterface
    */
   protected $config;
 
   /**
    * The current user for the request.
    *
-   * @var Drupal\Core\Session\AccountProxy
+   * @var Drupal\Core\Session\AccountProxyInterface
    */
   protected $currentUser;
 
   /**
    * Entity type manager.
    *
-   * @var Drupal\Core\Entity\EntityTypeManager
+   * @var Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
   /**
    * Default Drupal cache object.
    *
-   * @var Drupal\Core\Cache\DatabaseBackend
+   * @var Drupal\Core\Cache\CacheBackendInterface;
    */
   protected $cache;
 
@@ -55,20 +55,20 @@ class AccessControlSubscriber implements EventSubscriberInterface {
   /**
    * Constructor for AccessControlSubscriber.
    *
-   * @param \Drupal\Core\Config\ConfigFactory $config
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config
    *   The config factory service.
-   * @param \Drupal\Core\Session\AccountProxy $currentUser
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
    *   The current user service.
-   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager service.
-   * @param \Drupal\Core\Cache\DatabaseBackend $cache
+   * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    *   The default cache backend service.
    */
-  public function __construct(ConfigFactory $config, AccountProxy $currentUser, EntityTypeManager $entityTypeManager, DatabaseBackend $cache) {
-    $this->config = $config;
-    $this->currentUser = $currentUser;
-    $this->entityTypeManager = $entityTypeManager;
-    $this->cache = $cache;
+  public function __construct(ConfigFactoryInterface $config_factory, AccountProxyInterface $current_user, EntityTypeManagerInterface $entity_type_manager, CacheBackendInterface $default_cache) {
+    $this->config = $config_factory;
+    $this->currentUser = $current_user;
+    $this->entityTypeManager = $entity_type_manager;
+    $this->cache = $default_cache;
   }
 
   /**
