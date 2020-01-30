@@ -1,0 +1,10 @@
+assets:
+  version: 1.x
+  css:
+    theme:
+      lib/css/styles.css: {}
+  js:
+    lib/js/lockDownStatus.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

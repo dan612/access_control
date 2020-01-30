@@ -5,3 +5,10 @@ access_control.settings:
     _title: 'Access Control Killswitch'
   requirements:
     _permission: 'administer site configuration'
+access_control.status:
+  path: 'admin/access-control/status'
+  defaults:
+    _controller: '\Drupal\access_control\Controller\LockDownStatus::checkLockDownStatus'
+    _title: 'Access Control Lockdown Status'
+  requirements:
+    _permission: 'administer site configuration'

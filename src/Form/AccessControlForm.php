@@ -10,7 +10,7 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class AccessControlForm extends ConfigFormBase {
 
-  const AC_SETTINGS = 'access_control.settings';
+  const SETTINGS = 'access_control.settings';
 
   /**
    * {@inheritdoc}
@@ -24,7 +24,7 @@ class AccessControlForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames() {
     return [
-      static::AC_SETTINGS,
+      static::SETTINGS,
     ];
   }
 
@@ -33,7 +33,7 @@ class AccessControlForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
-    $config = $this->config(static::AC_SETTINGS);
+    $config = $this->config(static::SETTINGS);
 
     $form['lockdown'] = [
       '#type' => 'checkbox',
@@ -56,7 +56,7 @@ class AccessControlForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
-    $this->configFactory->getEditable(static::AC_SETTINGS)
+    $this->configFactory->getEditable(static::SETTINGS)
       ->set('lockdown', $form_state->getValue('lockdown'))
       ->save();
     parent::submitForm($form, $form_state);

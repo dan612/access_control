@@ -4,3 +4,16 @@
  * @file
  * Contains access_control.module.
  */
+
+/**
+ * Implements hook_theme().
+ */
+function access_control_theme() {
+  return [
+    'lockdown_status' => [
+      'variables' => [
+        'body' => NULL,
+      ],
+    ],
+  ];
+}
