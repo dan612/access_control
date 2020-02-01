@@ -1,0 +1,20 @@
+{#
+/**
+ * @file lockdown-response.html.twig
+ * Template for displaying the node list during lockdown
+ *
+ * Available variables:
+ */
+#}
+
+{{ attach_library('access_control/response_assets') }}
+<h1>Website is Currently Offline</h1>
+<h2>{{ custom_message }}</h2>
+<h3>Here is a preview of the pages on this site:</h3>
+<div id="lockdown-node-list">
+  {% for key,value in body %}
+    <div class="page-node">
+      <p>{{ value }}</p>
+    </div>
+  {% endfor %}
+</div>

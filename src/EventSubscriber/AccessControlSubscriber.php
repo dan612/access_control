@@ -2,6 +2,7 @@
 
 namespace Drupal\access_control\EventSubscriber;
 
+use Drupal\access_control\AccessControlLockdown;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -9,6 +10,7 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Drupal\Core\Render\Renderer;
 
 /**
  * AccessControlSubscriber class.
@@ -44,6 +46,20 @@ class AccessControlSubscriber implements EventSubscriberInterface {
   protected $cache;
 
   /**
+   * Access control service.
+   *
+   * @var Drupal\access_control\AccessControlLockdown
+   */
+  protected $accessControl;
+
+  /**
+   * Renderer service.
+   *
+   * @var Drupal\Core\Render\Renderer
+   */
+  protected $renderer;
+
+  /**
    * Node types to show in lockdown mode.
    *
    * @var array
@@ -63,12 +79,18 @@ class AccessControlSubscriber implements EventSubscriberInterface {
    *   Entity type manager service.
    * @param \Drupal\Core\Cache\CacheBackendInterface $default_cache
    *   The default cache backend service.
+   * @param \Drupal\access_control\AccessControlLockdown $access_control
+   *   The access control lockdown service.
+   * @param Drupal\Core\Render\Renderer $renderer_service
+   *   The renderer service.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, AccountProxyInterface $current_user, EntityTypeManagerInterface $entity_type_manager, CacheBackendInterface $default_cache) {
+  public function __construct(ConfigFactoryInterface $config_factory, AccountProxyInterface $current_user, EntityTypeManagerInterface $entity_type_manager, CacheBackendInterface $default_cache, AccessControlLockdown $access_control, Renderer $renderer_service) {
     $this->config = $config_factory;
     $this->currentUser = $current_user;
     $this->entityTypeManager = $entity_type_manager;
     $this->cache = $default_cache;
+    $this->accessControl = $access_control;
+    $this->renderer = $renderer_service;
   }
 
   /**
@@ -87,54 +109,41 @@ class AccessControlSubscriber implements EventSubscriberInterface {
    *   The current event.
    */
   public function checkAvailability(FilterResponseEvent $event) {
-    if ($this->currentUser->isAnonymous() && self::shouldBeOffline()) {
-      if ($cacheItem = $this->cache->get('access_control_page')) {
-        $event->setResponse($cacheItem->data);
-        $event->stopPropagation();
-        return;
-      }
-      $output = '<h1>Website is Currently Offline</h1>';
-      $output .= '<h2>Look at all the fun content that awaits!</h2>';
-      $output .= self::generateHtmlListOfLockdownNodes();
+    // Gateways.
+    $anon_check = $this->currentUser->isAnonymous();
+    if (!$anon_check) {
+      // Not anonymous - exit.
+      return;
+    }
+    $lockdown_check = $this->accessControl->shouldLockdown();
+    if (!$lockdown_check) {
+      // Killswitch is off - exit.
+      return;
+    }
+
+    // Check for the item in cache.
+    $cacheItem = $this->cache->get('access_control_page)');
+    // If no data retrieved from cache, output & set in cache.
+    if (empty($cacheItem->data)) {
+      $output = [
+        '#theme' => 'lockdown_response',
+        '#body' => $this->accessControl->generateListOfLockdownNodes(),
+        '#custom_message' => $this->accessControl->customMessage(),
+      ];
+      // @todo -- this shouldnt use the straight renderer class.
+      $rendered = $this->renderer->renderPlain($output);
       $response = $event->getResponse();
-      $response->setContent($output);
+      $response->setContent($rendered);
       $event->setResponse($response);
       $this->cache->set('access_control_page', $response, $this->cache::CACHE_PERMANENT, ['ac:response']);
       $event->stopPropagation();
+      return;
     }
-  }
-
-  /**
-   * Generates a list of titles of a given node type.
-   *
-   * @return string
-   *   HTML string that is an unordered list.
-   */
-  public function generateHtmlListOfLockdownNodes() {
-    $html = '<ul>';
-    $nodes = $this->entityTypeManager->getStorage('node')
-      ->loadByProperties($this->nodeTypesToShowInLockdown);
-    foreach ($nodes as $node) {
-      $title = $node->get('title')->value;
-      $html .= '<li>' . $title . '</li>';
+    else {
+      $response = $cacheItem->data;
     }
-    $html .= '</ul>';
-    return $html;
-  }
-
-  /**
-   * See if the site should be offline from settings.
-   *
-   * @return bool
-   *   True/false should the site be offline.
-   */
-  public function shouldBeOffline() {
-    $setting = $this->config->get('access_control.settings');
-    $enabled_check = $setting->get('lockdown');
-    if ($enabled_check === 1) {
-      return TRUE;
-    }
-    return FALSE;
+    $event->setResponse($cacheItem->data);
+    $event->stopPropagation();
   }
 
 }
