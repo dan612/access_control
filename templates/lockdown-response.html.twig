@@ -6,15 +6,20 @@
  * Available variables:
  */
 #}
-
 {{ attach_library('access_control/response_assets') }}
-<h1>Website is Currently Offline</h1>
-<h2>{{ custom_message }}</h2>
-<h3>Here is a preview of the pages on this site:</h3>
-<div id="lockdown-node-list">
-  {% for key,value in body %}
-    <div class="page-node">
-      <p>{{ value }}</p>
-    </div>
-  {% endfor %}
+<div class="headline-wrapper">
+  <h1>Site Is Currently Offline</h1>
+</div>
+<div class="custom-message-wrapper">
+  <p>{{ custom_message }}</p>
+</div>
+<div class="page-node-preview">
+  <h3>Preview of the pages on this site:</h3>
+  <div id="page-node-list-wrapper">
+    <ul class="page-node-list">
+      {% for key,value in body %}
+        <li class="list-item">{{ value }}</li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
