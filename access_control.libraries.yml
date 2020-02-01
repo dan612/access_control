@@ -1,10 +1,10 @@
-assets:
+response_assets:
   version: 1.x
   css:
     theme:
       lib/css/styles.css: {}
   js:
-    lib/js/lockDownStatus.js: {}
+    lib/js/lockDownPageActions.js: {}
   dependencies:
     - core/jquery
     - core/drupalSettings

@@ -8,11 +8,12 @@
 /**
  * Implements hook_theme().
  */
-function access_control_theme() {
+function access_control_theme($existing, $type, $theme, $path) {
   return [
-    'lockdown_status' => [
+    'lockdown_response' => [
       'variables' => [
-        'body' => NULL,
+        'body' => [],
+        'custom_message' => NULL,
       ],
     ],
   ];

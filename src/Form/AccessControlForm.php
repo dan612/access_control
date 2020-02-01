@@ -41,6 +41,13 @@ class AccessControlForm extends ConfigFormBase {
       '#description' => $this->t('Check this box to prevent anonymous viewers'),
       '#default_value' => $config->get('lockdown'),
     ];
+
+    $form['lockdown_message'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Message'),
+      '#description' => $this->t('Displays during lockdown mode'),
+      '#default_value' => $config->get('lockdown_message'),
+    ];
     return parent::buildForm($form, $form_state);
   }
 
@@ -55,9 +62,9 @@ class AccessControlForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-
     $this->configFactory->getEditable(static::SETTINGS)
       ->set('lockdown', $form_state->getValue('lockdown'))
+      ->set('lockdown_message', $form_state->getValue('lockdown_message'))
       ->save();
     parent::submitForm($form, $form_state);
     // @todo - this should probably just invalidate the ac:response cache tag
