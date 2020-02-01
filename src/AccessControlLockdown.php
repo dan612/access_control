@@ -67,6 +67,7 @@ class AccessControlLockdown {
    *   Array of titles.
    */
   public function generateListOfLockdownNodes() {
+    // @todo - this needs a limit.
     $titles = [];
     $nodes = $this->entityTypeManager->getStorage('node')
       ->loadByProperties($this->nodeTypesToShowInLockdown);
@@ -96,7 +97,7 @@ class AccessControlLockdown {
    * @return string
    *   Custom message from settings page.
    */
-  public function customMessage() {
+  public function customLockdownMessage() {
     $message = $this->t("@message", ['@message' => $this->config->get('lockdown_message')]);
     return $message;
   }

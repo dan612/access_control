@@ -4,7 +4,7 @@ services:
         arguments: ['@config.factory', '@entity_type.manager', '@string_translation']
     access_control.subscriber:
         class: Drupal\access_control\EventSubscriber\AccessControlSubscriber
-        arguments: ['@config.factory', '@current_user', '@entity_type.manager', '@cache.default', '@access_control.lockdown', '@renderer']
+        arguments: ['@config.factory', '@current_user', '@entity_type.manager', '@cache.default', '@access_control.lockdown', '@bare_html_page_renderer', '@messenger', '@string_translation']
         tags:
          - {name: event_subscriber}
     access_control.auth:
