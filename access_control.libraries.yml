@@ -4,7 +4,7 @@ response_assets:
     theme:
       lib/css/styles.css: {}
   js:
-    lib/js/lockDownPageActions.js: {}
+    lib/js/lockDownResponse.js: {}
   dependencies:
     - core/jquery
     - core/drupalSettings
