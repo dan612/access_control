@@ -1,0 +1,8 @@
+uuid: 90d1e776-ae5f-4e55-9ce2-f4dee7908908
+langcode: en
+status: true
+dependencies: {  }
+name: Sports
+vid: sports
+description: 'Different types of sports to display during lockdown'
+weight: 0

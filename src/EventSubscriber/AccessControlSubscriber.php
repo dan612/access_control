@@ -81,15 +81,6 @@ class AccessControlSubscriber implements EventSubscriberInterface {
   protected $stringTranslation;
 
   /**
-   * Node types to show in lockdown mode.
-   *
-   * @var array
-   */
-  protected $nodeTypesToShowInLockdown = [
-    'type' => 'page',
-  ];
-
-  /**
    * Constructor for AccessControlSubscriber.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -154,8 +145,9 @@ class AccessControlSubscriber implements EventSubscriberInterface {
     if (empty($cacheItem->data)) {
       $output = [
         '#theme' => 'lockdown_response',
-        '#body' => $this->accessControl->generateListOfLockdownNodes(),
+        '#body' => $this->accessControl->generateNodeTitlesForPreview(),
         '#custom_message' => $this->accessControl->customLockdownMessage(),
+        '#headlines' => $this->accessControl->generateEspnHeadlinesForPreview(),
       ];
       $rendered = $this->renderer->renderBarePage($output, $this->t("Website Offline"), 'page');
       $response = $event->getResponse();

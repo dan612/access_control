@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Contains access_control.module.
+ */
+
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Implements hook_install().
+ */
+function access_control_install() {
+  $vocabulary = "sports";
+  $sports = [
+    "NFL",
+    "MLB",
+    "NBA",
+    "NHL",
+    "Golf",
+    "Nascar",
+    "MMA",
+  ];
+
+  foreach ($sports as $sport) {
+    Term::create([
+      'name' => $sport,
+      'vid' => $vocabulary,
+    ])->save();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function access_control_uninstall() {
+  $vocabulary = "sports";
+  $sports = [
+    "NFL",
+    "MLB",
+    "NBA",
+    "NHL",
+    "Golf",
+    "Nascar",
+    "MMA",
+  ];
+  $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vocabulary);
+  foreach ($terms as $term) {
+    $term_name = $term->name;
+    if (in_array($term_name, $sports)) {
+      $tid = Term::load($term->tid);
+      $tid->delete();
+    }
+  }
+}

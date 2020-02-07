@@ -1,4 +1,82 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 .page-node-list {
-  column-count: 6; }
+  list-style-type: none;
+  padding: 0; }
+
+.page-node-preview {
+  border-top: 1px solid #ecebeb; }
+  .page-node-preview .list-item {
+    display: inline-block;
+    margin: 10px; }
+    .page-node-preview .list-item i {
+      vertical-align: middle; }
+
+.lockdown-title-wrapper {
+  background: #f1b039cf;
+  margin: 10px 0;
+  padding: 10px;
+  text-align: center; }
+  .lockdown-title-wrapper h1 {
+    color: white;
+    font-size: 36px;
+    display: inline-block; }
+
+.custom-message-wrapper {
+  margin: 20px 0; }
+
+.espn-headlines-wrapper {
+  position: relative; }
+  .espn-headlines-wrapper .powered-by {
+    background: #4bcdda;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 50px; }
+    .espn-headlines-wrapper .powered-by a {
+      border-bottom: none; }
+    .espn-headlines-wrapper .powered-by p {
+      color: #21939e;
+      font-style: italic; }
+  .espn-headlines-wrapper .espn-headlines {
+    text-align: center; }
+
+.headline {
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
+  width: calc((100% / 6) - 43px);
+  margin: 10px;
+  padding: 10px;
+  transition: all .5s ease-in-out;
+  cursor: pointer; }
+  .headline a {
+    border-bottom: none; }
+  .headline .headline-img-wrapper {
+    overflow: hidden; }
+  .headline .headline-img-wrapper img {
+    transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -webkit-transform: scale(1);
+    transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out; }
+  .headline:hover .headline-img-wrapper img {
+    transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -webkit-transform: scale(1.2); }
+  .headline:hover a {
+    text-decoration: underline; }
+  @media screen and (max-width: 1092px) {
+    .headline {
+      width: calc((100% / 4) - 43px); } }
+  @media screen and (max-width: 800px) {
+    .headline {
+      width: calc((100% / 2) - 3px);
+      margin: 10px 0;
+      padding: 0; }
+      .headline h4 {
+        padding: 0 15px; } }
 
 /*# sourceMappingURL=styles.css.map */
