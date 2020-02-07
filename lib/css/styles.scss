@@ -1,3 +1,115 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
 .page-node-list {
-    column-count: 6;
+    list-style-type: none;
+    padding: 0;
+}
+.page-node-preview {
+    border-top: 1px solid #ecebeb;
+    .list-item {
+        display: inline-block;
+        margin: 10px;
+
+        i {
+            vertical-align: middle;
+        }
+    }
+}
+
+.lockdown-title-wrapper {
+    background: #f1b039cf;
+    margin: 10px 0;
+    padding: 10px;
+    text-align: center;
+
+    h1 {
+        color: white;
+        font-size: 36px;
+        display: inline-block;
+    }
+}
+
+.custom-message-wrapper {
+    margin: 20px 0;
+}
+
+.espn-headlines-wrapper {
+    position: relative;
+
+    .powered-by {
+        background: #4bcdda;
+        text-align: center;
+        padding: 10px 0;
+        margin-top: 50px;
+
+        a {
+            border-bottom: none;
+        }
+
+        p {
+            color: darken(#4bcdda, 20%);
+            font-style: italic;
+        }
+    }
+
+    .espn-headlines {
+        text-align: center;
+    }
+}
+
+.headline {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    width: calc((100% / 6) - 43px);
+    margin: 10px;
+    padding: 10px;
+    transition: all .5s ease-in-out;
+    cursor: pointer;
+
+    a {
+        border-bottom: none;
+    }
+
+    .headline-img-wrapper {
+        overflow: hidden;
+    }
+
+    .headline-img-wrapper img {
+        transform: scale(1.0);
+        -moz-transform: scale(1.0);
+        -o-transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+        transition: all .5s ease-in-out;
+        -moz-transition: all .5s ease-in-out;
+        -o-transition: all .5s ease-in-out;
+        -webkit-transition: all .5s ease-in-out
+    }
+
+    &:hover {
+        .headline-img-wrapper img {
+            transform: scale(1.2);
+            -moz-transform: scale(1.2);
+            -o-transform: scale(1.2);
+            -webkit-transform: scale(1.2);
+        }
+
+        a {
+            text-decoration: underline;
+        }
+    }
+
+    @media screen and (max-width: 1092px) {
+        width: calc((100% / 4) - 43px);
+    }
+
+    @media screen and (max-width: 800px) {
+        width: calc((100% / 2) - 3px);
+        margin: 10px 0;
+        padding: 0;
+
+        h4 {
+            padding: 0 15px;
+        }
+    }
 }

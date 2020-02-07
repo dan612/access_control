@@ -6,20 +6,48 @@
  * Available variables:
  */
 #}
-{{ attach_library('access_control/response_assets') }}
-<div class="headline-wrapper">
-  <h1>Site Is Currently Offline</h1>
-</div>
-<div class="custom-message-wrapper">
-  <p>{{ custom_message }}</p>
-</div>
-<div class="page-node-preview">
-  <h3>Preview of the pages on this site:</h3>
-  <div id="page-node-list-wrapper">
-    <ul class="page-node-list">
-      {% for key,value in body %}
-        <li class="list-item">{{ value }}</li>
-      {% endfor %}
-    </ul>
+{% spaceless %}
+  {{ attach_library('access_control/response_assets') }}
+  <div class="lockdown-title-wrapper">
+    <h1>Site Is Currently Offline</h1>
   </div>
-</div>
+
+  <div class="custom-message-wrapper">
+    <p>{{ custom_message }}</p>
+  </div>
+
+  <div class="page-node-preview">
+    <h3>Here is a preview of some of the pages on this site:</h3>
+    <div id="page-node-list-wrapper">
+      <ul class="page-node-list">
+        {% for key,value in body %}
+          <li class="list-item">
+            <i class="material-icons">description</i>
+            {{ value }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="espn-headlines-wrapper">
+    <div class="powered-by">
+      <p>latest articles from</p>
+      <a href="https://www.espn.com">
+        <img src="https://a.espncdn.com/redesign/assets/img/logos/logo-espn-82x20@2x.png"/>
+      </a>
+    </div>
+    <div class="espn-headlines">
+      {% for headline in headlines %}
+        <div class="headline">
+          <a href="{{ headline.2 }}">
+            <div class="headline-img-wrapper">
+              <img src="{{ headline.0 }}"/>
+            </div>
+            <h4>{{ headline.1 }}</h4>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endspaceless %}
